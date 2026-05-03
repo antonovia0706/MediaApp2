@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;  // ← ВАЖНО!
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MediaApp2.Models;
 
@@ -22,6 +23,6 @@ public class Equipment
             : Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
 
     // Свойство для отображения состояния корзины
-    [System.ComponentModel.DataAnnotations.NotMapped]
+    [NotMapped]
     public bool IsInCart { get; set; } = false;
 }
