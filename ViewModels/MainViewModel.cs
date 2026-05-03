@@ -45,6 +45,25 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private int _selectedTabIndex;
 
+    // Свойства для бронирования помещений
+    [ObservableProperty]
+    private ObservableCollection<RoomBooking> _roomBookings = new();
+
+    [ObservableProperty]
+    private RoomBooking? _selectedBooking;
+
+    [ObservableProperty]
+    private DateTime _bookingDate = DateTime.Today;
+
+    [ObservableProperty]
+    private TimeSpan _bookingStartTime = new(9, 0, 0);
+
+    [ObservableProperty]
+    private TimeSpan _bookingEndTime = new(18, 0, 0);
+
+    [ObservableProperty]
+    private string _bookingPurpose = string.Empty;
+
     public MainViewModel(VkService vkService, IDataService? dataService = null)
     {
         _vkService = vkService;
@@ -177,5 +196,72 @@ public partial class MainViewModel : ObservableObject
         Cart.Clear();
         CartCount = 0;
         StatusMessage = "Корзина очищена";
+    }
+
+    // Методы для бронирования помещений
+    [RelayCommand]
+    private async Task LoadBookingsAsync()
+    {
+        if (_dataService == null) return;
+
+        var bookings = await _dataService.GetRoomBookingsAsync();
+        RoomBookings.Clear();
+        foreach (var b in bookings) RoomBookings.Add(b);
+        StatusMessage = $"Загружено {RoomBookings.Count} бронирований";
+    }
+
+    [RelayCommand]
+    private async Task BookRoomAsync()
+    {
+        if (_dataService == null || CurrentUser == null) return;
+        if (string.IsNullOrWhiteSpace(BookingPurpose))
+        {
+            StatusMessage = "Укажите цель бронирования";
+            return;
+        }
+        if (BookingEndTime <= BookingStartTime)
+        {
+            StatusMessage = "Время окончания должно быть позже времени начала";
+            return;
+        }
+
+        var booking = new RoomBooking
+        {
+            UserId = CurrentUser.Id,
+            UserName = CurrentUser.Login,
+            Date = BookingDate,
+            StartTime = BookingStartTime,
+            EndTime = BookingEndTime,
+            Purpose = BookingPurpose
+        };
+
+        var success = await _dataService.BookRoomAsync(booking);
+        StatusMessage = success ? "Забронировано! Ожидайте подтверждения." : "Ошибка: время уже занято";
+        
+        if (success)
+        {
+            BookingPurpose = string.Empty;
+            await LoadBookingsAsync();
+        }
+    }
+
+    [RelayCommand]
+    private async Task ApproveBookingAsync()
+    {
+        if (_dataService == null || SelectedBooking == null) return;
+
+        var success = await _dataService.ApproveBookingAsync(SelectedBooking.Id);
+        StatusMessage = success ? "Бронь подтверждена" : "Ошибка";
+        await LoadBookingsAsync();
+    }
+
+    [RelayCommand]
+    private async Task RejectBookingAsync()
+    {
+        if (_dataService == null || SelectedBooking == null) return;
+
+        var success = await _dataService.RejectBookingAsync(SelectedBooking.Id);
+        StatusMessage = success ? "Бронь отклонена" : "Ошибка";
+        await LoadBookingsAsync();
     }
 }

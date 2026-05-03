@@ -12,4 +12,10 @@ public interface IDataService
     Task<bool> ReturnAsync(int equipmentId);
     Task<Equipment> AddEquipmentAsync(string name);  // старый метод (для совместимости)
     Task<Equipment> AddEquipmentAsync(Equipment equipment);  // новый метод с объектом
+    
+    // Методы для бронирования помещений
+    Task<List<RoomBooking>> GetRoomBookingsAsync();
+    Task<bool> BookRoomAsync(RoomBooking booking);
+    Task<bool> ApproveBookingAsync(int bookingId);
+    Task<bool> RejectBookingAsync(int bookingId);
 }
