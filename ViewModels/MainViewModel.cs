@@ -5,6 +5,7 @@ using MediaApp2.Services;
 using MediaApp2.Views;  // ← ДОБАВИТЬ ЭТУ СТРОКУ!
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
