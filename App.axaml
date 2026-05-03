@@ -1,0 +1,16 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:MediaApp2.Converters"
+             x:Class="MediaApp2.App"
+             RequestedThemeVariant="Light">
+	<Application.Styles>
+		<FluentTheme />
+		<StyleInclude Source="Styles/Theme.axaml"/>
+	</Application.Styles>
+	<Application.Resources>
+		<converters:NotNullConverter x:Key="NotNullConverter"/>
+		<converters:TagToColorConverter x:Key="TagToColorConverter"/>
+		<converters:BoolToIconConverter x:Key="BoolToIconConverter"/>
+		<converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+	</Application.Resources>
+</Application>

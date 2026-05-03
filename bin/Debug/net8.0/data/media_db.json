@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "Id": 1,
+      "Login": "admin",
+      "Password": "admin",
+      "Role": "admin"
+    },
+    {
+      "Id": 2,
+      "Login": "student",
+      "Password": "123",
+      "Role": "user"
+    }
+  ],
+  "equipment": [
+    {
+      "Id": 1,
+      "Name": "\u041A\u0430\u043C\u0435\u0440\u0430 Sony A7",
+      "Description": "",
+      "Tags": "",
+      "Status": "available",
+      "TagList": []
+    },
+    {
+      "Id": 2,
+      "Name": "\u041C\u0438\u043A\u0440\u043E\u0444\u043E\u043D Rode NT1",
+      "Description": "",
+      "Tags": "",
+      "Status": "available",
+      "TagList": []
+    },
+    {
+      "Id": 3,
+      "Name": "123",
+      "Description": "",
+      "Tags": "",
+      "Status": "available",
+      "TagList": []
+    },
+    {
+      "Id": 4,
+      "Name": "kjdbnvkjdnfvkjdfnv",
+      "Description": "jhdbfvjkhbdfjvhbdfjvhbfhjv",
+      "Tags": "kdjfnvkjdfnvkjdnfkvjndfv",
+      "PhotoPath": "photos\\z.jpeg",
+      "Status": "available",
+      "TagList": [
+        "kdjfnvkjdfnvkjdnfkvjndfv"
+      ]
+    }
+  ],
+  "history": []
+}
