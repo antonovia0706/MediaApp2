@@ -15,6 +15,7 @@ public class JsonDataService : IDataService
     private List<User> _users = new();
     private List<Equipment> _equipment = new();
     private List<HistoryRecord> _history = new();
+    private List<RoomBooking> _bookings = new();
 
     // Настройки сериализации: игнорировать регистр имён свойств
     private static readonly JsonSerializerOptions _jsonOptions = new()
@@ -48,7 +49,8 @@ public class JsonDataService : IDataService
                         new { id = 1, name = "Камера Sony A7", status = "available", holderId = (int?)null, checkoutDate = (DateTime?)null },
                         new { id = 2, name = "Микрофон Rode NT1", status = "available", holderId = (int?)null, checkoutDate = (DateTime?)null }
                     },
-                    history = Array.Empty<HistoryRecord>()
+                    history = Array.Empty<HistoryRecord>(),
+                    bookings = Array.Empty<RoomBooking>()
                 };
 
                 var json = JsonSerializer.Serialize(defaultData, _jsonOptions);
@@ -68,8 +70,11 @@ public class JsonDataService : IDataService
             _users = JsonSerializer.Deserialize<List<User>>(data.GetProperty("users").GetRawText(), _jsonOptions) ?? new List<User>();
             _equipment = JsonSerializer.Deserialize<List<Equipment>>(data.GetProperty("equipment").GetRawText(), _jsonOptions) ?? new List<Equipment>();
             _history = JsonSerializer.Deserialize<List<HistoryRecord>>(data.GetProperty("history").GetRawText(), _jsonOptions) ?? new List<HistoryRecord>();
+            _bookings = data.TryGetProperty("bookings", out var bookingsProp) 
+                ? JsonSerializer.Deserialize<List<RoomBooking>>(bookingsProp.GetRawText(), _jsonOptions) ?? new List<RoomBooking>()
+                : new List<RoomBooking>();
 
-            Console.WriteLine($"✅ Загружено: {_users.Count} пользователей, {_equipment.Count} ед. техники");
+            Console.WriteLine($"✅ Загружено: {_users.Count} пользователей, {_equipment.Count} ед. техники, {_bookings.Count} бронирований");
 
             // Отладка: покажем, кто загружен
             foreach (var u in _users)
@@ -91,7 +96,7 @@ public class JsonDataService : IDataService
     {
         try
         {
-            var combined = new { users = _users, equipment = _equipment, history = _history };
+            var combined = new { users = _users, equipment = _equipment, history = _history, bookings = _bookings };
             File.WriteAllText(_dbPath, JsonSerializer.Serialize(combined, _jsonOptions));
         }
         catch (Exception ex)
@@ -184,5 +189,59 @@ public class JsonDataService : IDataService
         SaveData();
 
         return equipment;
+    }
+
+    // Методы для бронирования помещений
+    public async Task<List<RoomBooking>> GetRoomBookingsAsync()
+    {
+        await Task.Yield();
+        return _bookings;
+    }
+
+    public async Task<bool> BookRoomAsync(RoomBooking booking)
+    {
+        await Task.Yield();
+        
+        // Проверка на пересечение времени
+        var hasConflict = _bookings.Any(b => 
+            b.Date == booking.Date && 
+            b.Status != "rejected" &&
+            ((booking.StartTime >= b.StartTime && booking.StartTime < b.EndTime) ||
+             (booking.EndTime > b.StartTime && booking.EndTime <= b.EndTime) ||
+             (booking.StartTime <= b.StartTime && booking.EndTime >= b.EndTime))
+        );
+
+        if (hasConflict) return false;
+
+        var newId = _bookings.Any() ? _bookings.Max(b => b.Id) + 1 : 1;
+        booking.Id = newId;
+        booking.CreatedAt = DateTime.Now;
+        booking.Status = "pending";
+
+        _bookings.Add(booking);
+        SaveData();
+        return true;
+    }
+
+    public async Task<bool> ApproveBookingAsync(int bookingId)
+    {
+        await Task.Yield();
+        var booking = _bookings.FirstOrDefault(b => b.Id == bookingId);
+        if (booking == null) return false;
+
+        booking.Status = "approved";
+        SaveData();
+        return true;
+    }
+
+    public async Task<bool> RejectBookingAsync(int bookingId)
+    {
+        await Task.Yield();
+        var booking = _bookings.FirstOrDefault(b => b.Id == bookingId);
+        if (booking == null) return false;
+
+        booking.Status = "rejected";
+        SaveData();
+        return true;
     }
 }
