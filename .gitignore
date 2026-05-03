@@ -1,113 +1,125 @@
-# Build artifacts
-bin/
-obj/
-*.exe
-*.dll
-*.so
-*.dylib
-*.pdb
-*.ilk
+```csharp
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Dd]epends/
+intermediate/
+[Bb]in/
+[Oo]bj/
 
-# Dependencies
-packages/
-
-# Logs
-*.log
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Temporary files
-*.tmp
-*.temp
-
-# IDE specific
-.vs/
-.idea/
-*.userprefs
+# Visual Studio files
+*.user
 *.userosscache
 *.suo
-*.user
+*.csproj.user
+*.vbproj.user
+*.fsproj.user
+*.userprefs
+
+# Visual Studio Code files
+.vscode/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Chutzpah Test files
+_Chutzpah*
+
+# Visual C++ cache files
+ipch/
 *.aps
 *.ncb
 *.opendb
 *.opensdf
 *.sdf
-*.pidb
-*.idb
-*.iobj
-*.ipdb
-*.tlog
-*.resharper
-_ReSharper*/
-*.[Rr]e[Ss]harper
-*.DotSettings.user
-*.userprefs
-stylecop.issues.cache
+*.cachefile
 *.VC.db
 *.VC.VC.opendb
 
-# Visual Studio Code
-.vscode/
+# Windows Media Encoder files
+[Ee]ncoder[Ww]ork[Aa]rea/
 
-# Build outputs
-Debug/
-Release/
-x64/
-x86/
-build/
-artifacts/
+# Debug Files
+*.wdgt
+*._ide
+*.stackdump
 
-# Configuration files
-app.config
-web.config
-*.config
-*.xml
+# FileAlignment
+MkShares.cmd
+FileAlignment.txt
 
-# NuGet packages
-*.nupkg
-.nuget/
-packages/
-
-# Test results
-TestResults/
-*.trx
-
-# Azure
-azure-pipelines/_generated/
-
-# Temporary ASP.NET Core files
-obj/
-bin/
-
-# User secrets
-secrets.user
-*.user.secrets
-
-# Localized resources
-*.g.cs
-*.g.i.cs
-
-# Windows Forms designer
-*.usercontrol.g.cs
-*.form.g.cs
-*.resx.bak
-
-# WPF designer
-*.xaml.g.cs
-*.xaml.cs
-
-# Avalonia (AXAML files)
-*.axaml.g.cs
-*.axaml.cs
-*.paml.g.cs
-*.paml.cs
-
-# Publish folder
-publish/
-deploy/
-
-# Temporary files for AXAML compilation
-Views/obj/
-Views/bin/
+# Others
+*.fresh
+*_RESharper.Caches
+*.Cache
+ClientBin/
+~$*
+*~
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+*.[Pp]ublish.xml
+*.sql
+*.user.js
+*.sln.docstates
+msbuild.log
+Directory.Build.props
+Directory.Build.targets
+```

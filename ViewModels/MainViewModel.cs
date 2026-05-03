@@ -14,11 +14,6 @@ namespace MediaApp2.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    // ... остальной код
-}
-
-public partial class MainViewModel : ObservableObject
-{
     private readonly IDataService? _dataService;
     private readonly VkService _vkService;
 
@@ -71,6 +66,7 @@ public partial class MainViewModel : ObservableObject
         IsLoggedIn = false;
         IsAdmin = false;
         _ = LoadNewsAsync();
+        _ = LoadEquipmentAsync();
     }
 
     [RelayCommand]
@@ -166,7 +162,13 @@ public partial class MainViewModel : ObservableObject
 
         var list = await _dataService.GetEquipmentAsync();
         EquipmentList.Clear();
-        foreach (var eq in list) EquipmentList.Add(eq);
+        
+        // Обновляем состояние IsInCart для каждого элемента
+        foreach (var eq in list)
+        {
+            eq.IsInCart = Cart.Any(c => c.Id == eq.Id);
+            EquipmentList.Add(eq);
+        }
     }
 
     public event Action? OnLoginRequested;
@@ -180,9 +182,15 @@ public partial class MainViewModel : ObservableObject
         if (equipment == null) return;
 
         if (Cart.Contains(equipment))
+        {
             Cart.Remove(equipment);
+            equipment.IsInCart = false;
+        }
         else
+        {
             Cart.Add(equipment);
+            equipment.IsInCart = true;
+        }
 
         CartCount = Cart.Count;
         StatusMessage = CartCount > 0
@@ -193,6 +201,9 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ClearCart()
     {
+        foreach (var item in Cart)
+            item.IsInCart = false;
+        
         Cart.Clear();
         CartCount = 0;
         StatusMessage = "Корзина очищена";
