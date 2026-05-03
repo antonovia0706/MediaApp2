@@ -20,4 +20,8 @@ public class Equipment
         string.IsNullOrWhiteSpace(Tags)
             ? new List<string>()
             : Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+
+    // Свойство для отображения состояния корзины
+    [System.ComponentModel.DataAnnotations.NotMapped]
+    public bool IsInCart { get; set; } = false;
 }
