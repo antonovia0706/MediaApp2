@@ -53,7 +53,7 @@
 											<Button Content="{Binding Name}"
 												   Background="{Binding Color}" Foreground="White"
 												   CornerRadius="15" Padding="8,4" Margin="2"
-												   Command="{Binding $parent[ItemsControl].DataContext.RemoveTagCommand}"
+												   Command="{Binding $parent[Window].DataContext.RemoveTagCommand}"
 												   CommandParameter="{Binding}"
 												   BorderThickness="0" Cursor="Hand" FontSize="11"/>
 										</DataTemplate>
@@ -73,7 +73,7 @@
 											<Button Content="{Binding Name}"
 												   Background="{Binding Color}" Foreground="White" Opacity="0.6"
 												   CornerRadius="15" Padding="8,4" Margin="2"
-												   Command="{Binding $parent[ItemsControl].DataContext.AddTagCommand}"
+												   Command="{Binding $parent[Window].DataContext.AddTagCommand}"
 												   CommandParameter="{Binding}"
 												   BorderThickness="0" Cursor="Hand" FontSize="11"/>
 										</DataTemplate>
