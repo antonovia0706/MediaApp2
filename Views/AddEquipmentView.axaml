@@ -4,7 +4,8 @@
         x:Class="MediaApp2.Views.AddEquipmentView"
         x:DataType="vm:AddEquipmentViewModel"
         Title="➕ Добавить технику" Width="500" Height="600"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        x:Name="AddEquipmentWindow">
 
 	<Border Padding="20">
 		<Border Background="White" CornerRadius="16" Padding="25"
@@ -53,7 +54,7 @@
 											<Button Content="{Binding Name}"
 												   Background="{Binding Color}" Foreground="White"
 												   CornerRadius="15" Padding="8,4" Margin="2"
-												   Command="{Binding $parent[Window].DataContext.RemoveTagCommand}"
+												   Command="{Binding $parent[x:Type Window].DataContext.RemoveTagCommand}"
 												   CommandParameter="{Binding}"
 												   BorderThickness="0" Cursor="Hand" FontSize="11"/>
 										</DataTemplate>
@@ -73,7 +74,7 @@
 											<Button Content="{Binding Name}"
 												   Background="{Binding Color}" Foreground="White" Opacity="0.6"
 												   CornerRadius="15" Padding="8,4" Margin="2"
-												   Command="{Binding $parent[Window].DataContext.AddTagCommand}"
+												   Command="{Binding $parent[x:Type Window].DataContext.AddTagCommand}"
 												   CommandParameter="{Binding}"
 												   BorderThickness="0" Cursor="Hand" FontSize="11"/>
 										</DataTemplate>
