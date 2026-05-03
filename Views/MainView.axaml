@@ -95,7 +95,6 @@
 
 							<!-- Таблица техники -->
 							<!-- Вкладка техники -->
-							<TabItem Header=" Техника" IsVisible="{Binding IsLoggedIn}">
 								<DockPanel>
 									<!-- Панель корзины -->
 									<Border DockPanel.Dock="Right" Width="250" Background="#f8f9fa"
@@ -203,10 +202,7 @@
 										</DataGrid.Columns>
 									</DataGrid>
 								</DockPanel>
-							</TabItem>
 						</DockPanel>
-				</TabItem>
-</TabItem>
 
 <!-- Вкладка бронирования помещения -->
 <TabItem Header=" 🏢 Бронирование" IsVisible="{Binding IsLoggedIn}">
