@@ -31,7 +31,6 @@
 					</StackPanel>
 
 					<!-- Теги -->
-					<!-- Теги -->
 					<StackPanel Spacing="5">
 						<StackPanel Orientation="Horizontal">
 							<TextBlock Text="Теги" FontWeight="SemiBold"/>
@@ -43,6 +42,7 @@
 						<Border CornerRadius="10" Padding="10" Background="#fafafa" BorderThickness="1" BorderBrush="#ddd">
 							<StackPanel Spacing="8">
 								<!-- Выбранные теги -->
+								<TextBlock Text="Выбранные:" FontSize="11" Foreground="#999"/>
 								<ItemsControl ItemsSource="{Binding SelectedTags}">
 									<ItemsControl.ItemsPanel>
 										<ItemsPanelTemplate>
@@ -54,7 +54,9 @@
 											<Button Content="{Binding Name}"
 												   Background="{Binding Color}" Foreground="White"
 												   CornerRadius="15" Padding="8,4" Margin="2"
-												   BorderThickness="0" Cursor="Hand" FontSize="11"/>
+												   BorderThickness="0" Cursor="Hand" FontSize="11"
+												   Command="{Binding $parent[ItemsControl].DataContext.RemoveTagFromSelectedCommand, x:DataType=vm:AddEquipmentViewModel}"
+												   CommandParameter="{Binding .}"/>
 										</DataTemplate>
 									</ItemsControl.ItemTemplate>
 								</ItemsControl>
@@ -72,7 +74,9 @@
 											<Button Content="{Binding Name}"
 												   Background="{Binding Color}" Foreground="White" Opacity="0.6"
 												   CornerRadius="15" Padding="8,4" Margin="2"
-												   BorderThickness="0" Cursor="Hand" FontSize="11"/>
+												   BorderThickness="0" Cursor="Hand" FontSize="11"
+												   Command="{Binding $parent[ItemsControl].DataContext.AddTagFromAvailableCommand, x:DataType=vm:AddEquipmentViewModel}"
+												   CommandParameter="{Binding .}"/>
 										</DataTemplate>
 									</ItemsControl.ItemTemplate>
 								</ItemsControl>
