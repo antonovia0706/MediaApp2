@@ -12,5 +12,6 @@
 		<converters:TagToColorConverter x:Key="TagToColorConverter"/>
 		<converters:BoolToIconConverter x:Key="BoolToIconConverter"/>
 		<converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+		<converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
 	</Application.Resources>
 </Application>
