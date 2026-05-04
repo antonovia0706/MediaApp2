@@ -6,7 +6,8 @@
         x:Class="MediaApp2.Views.MainView"
         x:DataType="vm:MainViewModel"
         Title="🎬 Медиацентр ГУАП" Width="1000" Height="700"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        xmlns:views="using:MediaApp2.Views">
 
 <Border Padding="20">
 <DockPanel>
@@ -256,7 +257,9 @@
         BorderThickness="{Binding IsToday, Converter={StaticResource BoolToBorderConverter}}"
         BorderBrush="#667eea"
         Cursor="Hand"
-        controls:ToolTip.Tip="{Binding BookingInfo}">
+        controls:ToolTip.Tip="{Binding BookingInfo}"
+        Tapped="OnCalendarDayTapped"
+        DataContext="{Binding}">
     <Border.Styles>
         <Style Selector="Border:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="#80ffffff"/>
