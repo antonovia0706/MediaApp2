@@ -112,7 +112,7 @@
    BoxShadow="0 2 4 #10000000">
 <StackPanel>
 <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12"/>
-<Button Content="❌ Убрать" Command="{Binding $parent[DataGrid].DataContext.ToggleCartCommand}"
+<Button Content="❌ Убрать" Command="{Binding $parent[Window].DataContext.ToggleCartCommand}"
    CommandParameter="{Binding}" Width="80" HorizontalAlignment="Right"
    Background="Transparent" Foreground="#e74c3c" FontSize="10"
    BorderThickness="0" Cursor="Hand"/>
@@ -149,7 +149,7 @@ Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
 <DataGridTemplateColumn.CellTemplate>
 <DataTemplate>
 <Button Content="{Binding IsInCart, Converter={StaticResource BoolToIconConverter}}"
-   Command="{Binding $parent[DataGrid].DataContext.ToggleCartCommand}"
+   Command="{Binding $parent[Window].DataContext.ToggleCartCommand}"
    CommandParameter="{Binding}"
    Background="Transparent" BorderThickness="0"
    Cursor="Hand" FontSize="18"/>
