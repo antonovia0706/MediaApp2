@@ -22,14 +22,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Дата (только просмотр) -->
-                <StackPanel Spacing="5">
-                    <TextBlock Text="Дата" FontSize="14" Foreground="#333"/>
-                    <DatePicker SelectedDate="{Binding BookingDate}" 
-                                IsEnabled="False"
-                                Classes="Outlined"/>
-                </StackPanel>
-
                 <!-- Время начала -->
                 <StackPanel Spacing="5">
                     <TextBlock Text="Время начала *" FontSize="14" Foreground="#333"/>
