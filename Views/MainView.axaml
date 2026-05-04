@@ -183,6 +183,7 @@
 <DockPanel>
 <!-- Заголовок и легенда -->
 <Border DockPanel.Dock="Top" Background="#f8f9fa" CornerRadius="12" Padding="20" Margin="0,0,0,20">
+<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
 <StackPanel Spacing="15">
 <TextBlock Text="📅 Календарь бронирования студии" FontSize="20" FontWeight="Bold" Foreground="#667eea"/>
 
@@ -284,6 +285,7 @@
 <Button Content="📝 Забронировать студию" Command="{Binding BookRoomCommand}" 
 Classes="PrimaryButton" Width="250" HorizontalAlignment="Center" Margin="0,15,0,0" FontSize="14" Padding="15,10"/>
 </StackPanel>
+</ScrollViewer>
 </Border>
 
 <!-- Список всех бронирований -->

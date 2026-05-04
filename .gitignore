@@ -1,24 +1,31 @@
-```
-# Build artifacts
-bin/
-obj/
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
 *.dll
-*.exe
-*.pdb
 *.so
-*.dylib
+*.a
 *.class
+*.exe
+*.out
 
 # Dependencies
-packages/
-node_modules/
-venv/
 .venv/
-__pycache__/
-*.egg-info/
+venv/
+node_modules/
+dist/
+build/
+target/
+.gradle/
+.mypy_cache/
+.pytest_cache/
 
-# Logs
+# Logs and temp files
 *.log
+*.tmp
+*.swp
+*.swo
 
 # Environment
 .env
@@ -31,42 +38,35 @@ __pycache__/
 *.swp
 *.swo
 
-# OS
+# System files
 .DS_Store
 Thumbs.db
 
-# Test and coverage
+# Coverage
 coverage/
 htmlcov/
 .coverage
-*.coveragerc
 
-# Distribution / packaging
-dist/
-build/
-*.tar.gz
-*.whl
+# Compressed files
 *.zip
-
-# Compiled Python
-*.pyc
-*.pyo
-*.pyd
-
-# Compiled C#
-[Bb]in/
-[Oo]bj/
-*.userprefs
-*.suo
-*.user
-*.aps
-*.pch
-*.vspscc
-*.vssscc
-*_i.c
-*_p.c
-*.ilk
-*.meta
-*.pidb
-*.svclog
-```
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
