@@ -1,56 +1,22 @@
-```
 # Build artifacts
-bin/
-obj/
-*.exe
-*.dll
-*.so
-*.a
-*.lib
-*.obj
-*.out
+*.axaml~*
+*.axaml.bak
+*.axaml.tmp
 
-# Dependencies
-packages/
-node_modules/
-venv/
-.venv/
-__pycache__/
-*.egg-info/
-
-# Logs and temporary files
+# Logs and temp files
 *.log
 *.tmp
-*.temp
-*.cache
-
-# Environment
-.env
-.env.local
-*.env.*
+*.swp
 
 # Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# OS
+# OS specific
 .DS_Store
 Thumbs.db
 
-# Coverage
-coverage/
-htmlcov/
-.coverage
-
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-```
+# Configuration backups
+*.bak
+*.backup
+*.original

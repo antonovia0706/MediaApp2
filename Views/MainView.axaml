@@ -112,10 +112,6 @@
    BoxShadow="0 2 4 #10000000">
 <StackPanel>
 <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12"/>
-<Button Content="❌ Убрать" Command="{Binding $parent[x:Type Window].DataContext.ToggleCartCommand}";
-   CommandParameter="{Binding}" Width="80" HorizontalAlignment="Right"
-   Background="Transparent" Foreground="#e74c3c" FontSize="10"
-   BorderThickness="0" Cursor="Hand"/>
 </StackPanel>
 </Border>
 </DataTemplate>
@@ -145,18 +141,6 @@ Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
  IsReadOnly="True"
  SelectionMode="Extended">
 <DataGrid.Columns>
-<DataGridTemplateColumn Header="🛒" Width="50">
-<DataGridTemplateColumn.CellTemplate>
-<DataTemplate>
-<Button Content="{Binding IsInCart, Converter={StaticResource BoolToIconConverter}}"
-   Command="{Binding $parent[x:Type Window].DataContext.ToggleCartCommand}";
-   CommandParameter="{Binding}"
-   Background="Transparent" BorderThickness="0"
-   Cursor="Hand" FontSize="18"/>
-</DataTemplate>
-</DataGridTemplateColumn.CellTemplate>
-</DataGridTemplateColumn>
-
 <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
 
 <DataGridTemplateColumn Header="Теги" Width="200">
