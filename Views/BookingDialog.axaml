@@ -1,0 +1,111 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MediaApp2.ViewModels"
+        x:Class="MediaApp2.Views.BookingDialog"
+        x:DataType="vm:MainViewModel"
+        Title="📅 Бронирование студии" 
+        Width="500" Height="600"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+
+    <Border Padding="25" Background="White">
+        <StackPanel Spacing="15">
+            <!-- Заголовок -->
+            <TextBlock Text="Забронировать студию" FontSize="24" FontWeight="Bold" Foreground="#667eea" HorizontalAlignment="Center"/>
+            
+            <Border Background="#f8f9fa" CornerRadius="12" Padding="15" Margin="0,10">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Выбранная дата:" FontSize="14" Foreground="#666"/>
+                    <TextBlock Text="{Binding SelectedCalendarDate, StringFormat='{}{0:dd MMMM yyyy}'}" 
+                               FontSize="18" FontWeight="Bold" Foreground="#667eea"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Дата (только просмотр) -->
+            <StackPanel Spacing="5">
+                <TextBlock Text="Дата" FontSize="14" Foreground="#333"/>
+                <DatePicker SelectedDate="{Binding BookingDate}" 
+                            IsEnabled="False"
+                            Classes="Outlined"/>
+            </StackPanel>
+
+            <!-- Время начала -->
+            <StackPanel Spacing="5">
+                <TextBlock Text="Время начала *" FontSize="14" Foreground="#333"/>
+                <TimePicker SelectedTime="{Binding BookingStartTime}" 
+                            Format="HH:mm"
+                            Classes="Outlined"/>
+            </StackPanel>
+
+            <!-- Время окончания -->
+            <StackPanel Spacing="5">
+                <TextBlock Text="Время окончания *" FontSize="14" Foreground="#333"/>
+                <TimePicker SelectedTime="{Binding BookingEndTime}" 
+                            Format="HH:mm"
+                            Classes="Outlined"/>
+            </StackPanel>
+
+            <!-- Цель бронирования -->
+            <StackPanel Spacing="5">
+                <TextBlock Text="Цель бронирования *" FontSize="14" Foreground="#333"/>
+                <TextBox Text="{Binding BookingPurpose}" 
+                         Watermark="Например: Съемка видеоролика, Лекция и т.д."
+                         Classes="Outlined"
+                         Height="80"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Переключатель гостя -->
+            <CheckBox Content="Я гость (не авторизован)" 
+                      IsChecked="{Binding IsGuestBooking}"
+                      Foreground="#667eea"
+                      FontSize="14"/>
+
+            <!-- Поля для гостей -->
+            <StackPanel Spacing="15" IsVisible="{Binding IsGuestBooking}">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Ваше имя *" FontSize="14" Foreground="#333"/>
+                    <TextBox Text="{Binding GuestName}" 
+                             Watermark="Введите ваше имя"
+                             Classes="Outlined"/>
+                </StackPanel>
+
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Email для связи" FontSize="14" Foreground="#333"/>
+                    <TextBox Text="{Binding GuestEmail}" 
+                             Watermark="example@mail.ru"
+                             Classes="Outlined"/>
+                </StackPanel>
+
+                <StackPanel Spacing="5">
+                    <TextBlock Text="Телефон для связи" FontSize="14" Foreground="#333"/>
+                    <TextBox Text="{Binding GuestPhone}" 
+                             Watermark="+7 (999) 000-00-00"
+                             Classes="Outlined"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Статус сообщение -->
+            <TextBlock Text="{Binding StatusMessage}" 
+                       Foreground="#e74c3c" 
+                       FontSize="12" 
+                       TextWrapping="Wrap"
+                       IsVisible="{Binding StatusMessage, Converter={StaticResource NotNullConverter}}"/>
+
+            <!-- Кнопки -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15" Margin="0,10">
+                <Button Content="✅ Забронировать" 
+                        Command="{Binding BookRoomCommand}"
+                        Classes="PrimaryButton"
+                        Width="150"
+                        Click="OnBookClicked"/>
+                <Button Content="❌ Отмена" 
+                        Click="OnCancelClicked"
+                        Width="120"
+                        Background="#f5f5f5"
+                        Foreground="#666"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

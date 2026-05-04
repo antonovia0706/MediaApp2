@@ -277,6 +277,7 @@ public partial class MainViewModel : ObservableObject
         if (day == null) return;
         
         SelectedCalendarDate = day.Date;
+        BookingDate = day.Date.Date;
         SelectedDayBooking = RoomBookings.FirstOrDefault(b => b.Date.Date == day.Date.Date);
     }
 
