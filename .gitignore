@@ -1,103 +1,72 @@
-```gitignore
+```
 # Build artifacts
+bin/
+obj/
 *.dll
 *.exe
 *.pdb
-*.obj
-*.o
-*.a
 *.so
+*.dylib
 *.class
-*.pyc
-__pycache__/
-*.pyo
-*.pyd
 
 # Dependencies
+packages/
 node_modules/
 venv/
 .venv/
-.env
-.env.local
-.env.*
-
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# OS files
-.DS_Store
-Thumbs.db
+__pycache__/
+*.egg-info/
 
 # Logs
 *.log
 
-# Coverage
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test and coverage
 coverage/
 htmlcov/
 .coverage
+*.coveragerc
 
 # Distribution / packaging
 dist/
 build/
-*.egg-info/
-
-# Testing
-.mypy_cache/
-.pytest_cache/
-.nyc_output/
-coverage.xml
-*.gcda
-*.gcno
-
-# Compression archives
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
 *.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
+*.whl
+*.zip
 
-# Gradle
-.gradle/
-build/
+# Compiled Python
+*.pyc
+*.pyo
+*.pyd
 
-# Maven
-target/
-
-# C#
-bin/
-obj/
+# Compiled C#
+[Bb]in/
+[Oo]bj/
 *.userprefs
-*.userosscache
-*.sln.docstates
-
-# Temporary files
-*.tmp
-*~
+*.suo
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.pidb
+*.svclog
 ```
-
-Wait, let me reconsider this. The file changes only include source code files (.cs and .axaml), not any build artifacts or dependency directories. According to rule #6, if the change list contains only source or config files and no build artifacts, dependencies, or temp files, I should output an empty .gitignore.
-
-Since only `ViewModels/MainViewModel.cs` and `Views/BookingDialog.axaml` were modified (both are source files), no additional ignores are needed.
-
-(empty - output nothing)
