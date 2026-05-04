@@ -54,7 +54,7 @@
 <DataTemplate DataType="models:VkPost">
 <Border Classes="NewsCard">
 <StackPanel Spacing="8">
-<StackPanel Orientation="Horizontal">
+<StackPanel Orientation="Horizontal">;
 <TextBlock Text="👤" FontSize="16"/>
 <TextBlock Text="{Binding AuthorName}" FontWeight="Bold" Foreground="#667eea" Margin="5,0,0,0"/>
 <TextBlock Text="•" Margin="10,0"/>
@@ -74,7 +74,7 @@
 </Border>
 </DataTemplate>
 </ItemsControl.ItemTemplate>
-</ItemsControl>
+</ItemsControl>;
 </StackPanel>
 </ScrollViewer>
 </TabItem>
@@ -112,7 +112,7 @@
    BoxShadow="0 2 4 #10000000">
 <StackPanel>
 <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12"/>
-<Button Content="❌ Убрать" Command="{Binding $parent[x:Type Window].DataContext.ToggleCartCommand}"
+<Button Content="❌ Убрать" Command="{Binding $parent[x:Type Window].DataContext.ToggleCartCommand}";
    CommandParameter="{Binding}" Width="80" HorizontalAlignment="Right"
    Background="Transparent" Foreground="#e74c3c" FontSize="10"
    BorderThickness="0" Cursor="Hand"/>
@@ -149,7 +149,7 @@ Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
 <DataGridTemplateColumn.CellTemplate>
 <DataTemplate>
 <Button Content="{Binding IsInCart, Converter={StaticResource BoolToIconConverter}}"
-   Command="{Binding $parent[x:Type Window].DataContext.ToggleCartCommand}"
+   Command="{Binding $parent[x:Type Window].DataContext.ToggleCartCommand}";
    CommandParameter="{Binding}"
    Background="Transparent" BorderThickness="0"
    Cursor="Hand" FontSize="18"/>
