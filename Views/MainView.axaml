@@ -256,7 +256,7 @@ Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
 <StackPanel>
 <TextBlock Text="{Binding UserName}" FontWeight="SemiBold"/>
 <TextBlock Text="{Binding Purpose}" FontSize="12" Foreground="#666"/>
-<TextBlock Text="{Binding StartTime, StringFormat='{}{0:hh\\:mm}'} - {Binding EndTime, StringFormat='{}{0:hh\\:mm}'}" FontSize="11" Foreground="#999"/>
+<TextBlock Text="{Binding StartTime, StringFormat='{}{0:hh\:mm}'} - {Binding EndTime, StringFormat='{}{0:hh\:mm}'}" FontSize="11" Foreground="#999"/>
 <Border CornerRadius="4" Padding="4,2" Margin="0,2" 
         Background="{Binding Status, Converter={StaticResource StatusToColorConverter}}" 
         HorizontalAlignment="Left">
@@ -277,7 +277,7 @@ Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
 
 <!-- Переключатель: пользователь / гость -->
 <StackPanel Orientation="Horizontal" Spacing="15">
-<CheckBox Content="Я гость (без аккаунта)\" IsChecked=\"{Binding IsGuestBooking}\"/>
+<CheckBox Content="Я гость (без аккаунта)" IsChecked="{Binding IsGuestBooking}"/>
 </StackPanel>
 
 <Grid ColumnDefinitions=\"*,*,*\" RowDefinitions=\"Auto,Auto,Auto,Auto,Auto\" VerticalAlignment=\"Center\">
