@@ -33,7 +33,6 @@
             <StackPanel Spacing="5">
                 <TextBlock Text="Время начала *" FontSize="14" Foreground="#333"/>
                 <TimePicker SelectedTime="{Binding BookingStartTime}" 
-                            Format="HH:mm"
                             Classes="Outlined"/>
             </StackPanel>
 
@@ -41,7 +40,6 @@
             <StackPanel Spacing="5">
                 <TextBlock Text="Время окончания *" FontSize="14" Foreground="#333"/>
                 <TimePicker SelectedTime="{Binding BookingEndTime}" 
-                            Format="HH:mm"
                             Classes="Outlined"/>
             </StackPanel>
 

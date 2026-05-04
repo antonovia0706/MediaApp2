@@ -436,7 +436,7 @@ public partial class MainViewModel : ObservableObject
             IsGuest = isGuest,
             GuestEmail = guestEmail,
             GuestPhone = guestPhone,
-            Date = BookingDate,
+            Date = BookingDate ?? DateTime.Today,
             StartTime = BookingStartTime,
             EndTime = BookingEndTime,
             Purpose = BookingPurpose
