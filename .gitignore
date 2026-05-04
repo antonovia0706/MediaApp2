@@ -1,22 +1,25 @@
+```gitignore
 # Build artifacts
-*.axaml~*
-*.axaml.bak
-*.axaml.tmp
-
-# Logs and temp files
-*.log
+*.obj
+*.exe
+*.dll
+*.pdb
+*.userprefs
+*.cache
 *.tmp
-*.swp
 
-# Editors
+# Dependencies
+packages/
+bin/
+obj/
+
+# Logs
+*.log
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+.vs/
 .vscode/
-.idea/
-
-# OS specific
-.DS_Store
-Thumbs.db
-
-# Configuration backups
-*.bak
-*.backup
-*.original
+```

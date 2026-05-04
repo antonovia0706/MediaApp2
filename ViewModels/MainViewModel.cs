@@ -60,6 +60,18 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private string _bookingPurpose = string.Empty;
 
+    [ObservableProperty]
+    private string _guestName = string.Empty;
+
+    [ObservableProperty]
+    private string _guestEmail = string.Empty;
+
+    [ObservableProperty]
+    private string _guestPhone = string.Empty;
+
+    [ObservableProperty]
+    private bool _isGuestBooking = false;
+
     public MainViewModel(VkService vkService, IDataService? dataService = null)
     {
         _vkService = vkService;
@@ -225,7 +237,9 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task BookRoomAsync()
     {
-        if (_dataService == null || CurrentUser == null) return;
+        if (_dataService == null) return;
+        
+        // Проверка для авторизованных пользователей и гостей
         if (string.IsNullOrWhiteSpace(BookingPurpose))
         {
             StatusMessage = "Укажите цель бронирования";
@@ -237,10 +251,45 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
+        string userName;
+        int? userId = null;
+        bool isGuest = false;
+        string guestEmail = string.Empty;
+        string guestPhone = string.Empty;
+
+        if (CurrentUser != null)
+        {
+            // Авторизованный пользователь
+            userName = CurrentUser.Login;
+            userId = CurrentUser.Id;
+        }
+        else
+        {
+            // Гость
+            if (string.IsNullOrWhiteSpace(GuestName))
+            {
+                StatusMessage = "Гость: введите ваше имя";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(GuestEmail) && string.IsNullOrWhiteSpace(GuestPhone))
+            {
+                StatusMessage = "Гость: введите email или телефон для связи";
+                return;
+            }
+            
+            userName = GuestName;
+            isGuest = true;
+            guestEmail = GuestEmail;
+            guestPhone = GuestPhone;
+        }
+
         var booking = new RoomBooking
         {
-            UserId = CurrentUser.Id,
-            UserName = CurrentUser.Login,
+            UserId = userId,
+            UserName = userName,
+            IsGuest = isGuest,
+            GuestEmail = guestEmail,
+            GuestPhone = guestPhone,
             Date = BookingDate,
             StartTime = BookingStartTime,
             EndTime = BookingEndTime,
@@ -248,11 +297,17 @@ public partial class MainViewModel : ObservableObject
         };
 
         var success = await _dataService.BookRoomAsync(booking);
-        StatusMessage = success ? "Забронировано! Ожидайте подтверждения." : "Ошибка: время уже занято";
+        StatusMessage = success ? "Забронировано! Ожидайте подтверждения администратора." : "Ошибка: время уже занято";
         
         if (success)
         {
             BookingPurpose = string.Empty;
+            if (isGuest)
+            {
+                GuestName = string.Empty;
+                GuestEmail = string.Empty;
+                GuestPhone = string.Empty;
+            }
             await LoadBookingsAsync();
         }
     }
