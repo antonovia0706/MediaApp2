@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Input;
 using MediaApp2.ViewModels;
 using System;
 
