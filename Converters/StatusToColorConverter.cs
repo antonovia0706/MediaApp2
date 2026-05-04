@@ -12,6 +12,10 @@ public class StatusToColorConverter : IValueConverter
         {
             "available" => "#27ae60",
             "taken" => "#e74c3c",
+            "pending" => "#f39c12",
+            "approved" => "#27ae60",
+            "rejected" => "#e74c3c",
+            "completed" => "#3498db",
             _ => "#95a5a6"
         };
     }

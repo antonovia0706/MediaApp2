@@ -246,7 +246,13 @@ Classes="PrimaryButton" Width="200" HorizontalAlignment="Right"/>
   SelectedItem="{Binding SelectedBooking}">
 <DataGrid.Columns>
 <DataGridTextColumn Header="Пользователь" Binding="{Binding UserName}" Width="*"/>
-<DataGridTextColumn Header="Тип" Binding="{Binding IsGuest, Converter={StaticResource BoolToIconConverter}}" Width="80"/>
+<DataGridTemplateColumn Header="Тип" Width="80">
+<DataGridTemplateColumn.CellTemplate>
+<DataTemplate>
+<TextBlock Text="{Binding IsGuest, Converter={StaticResource BoolToIconConverter}}" FontSize="12"/>
+</DataTemplate>
+</DataGridTemplateColumn.CellTemplate>
+</DataGridTemplateColumn>
 <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat='dd.MM.yyyy'}" Width="100"/>
 <DataGridTextColumn Header="Начало" Binding="{Binding StartTime, StringFormat='hh\:mm'}" Width="80"/>
 <DataGridTextColumn Header="Окончание" Binding="{Binding EndTime, StringFormat='hh\:mm'}" Width="80"/>
