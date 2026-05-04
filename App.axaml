@@ -14,5 +14,6 @@
 		<converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
 		<converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
 		<converters:BoolToBorderConverter x:Key="BoolToBorderConverter"/>
+		<converters:DayStatusToColorConverter x:Key="DayStatusToColorConverter"/>
 	</Application.Resources>
 </Application>

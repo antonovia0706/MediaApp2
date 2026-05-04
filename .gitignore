@@ -1,1 +1,41 @@
-Nothing should be ignored based on the provided file changes. The modified file 'Views/AddEquipmentView.axaml' is a source code file that should be tracked in version control.
+```
+# Build artifacts
+*.exe
+*.dll
+*.pdb
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+
+# Dependencies
+packages/
+bin/
+obj/
+out/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vs/
+.vscode/
+.idea/
+*.userprefs
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+```
