@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MediaApp2.Models;
 using MediaApp2.Services;
-using MediaApp2.Views;  // ← ДОБАВИТЬ ЭТУ СТРОКУ!
+using MediaApp2.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using System.Globalization;
 
 namespace MediaApp2.ViewModels;
 
@@ -71,6 +72,16 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     private bool _isGuestBooking = false;
+
+    // Статистика бронирования
+    [ObservableProperty]
+    private int _totalBookings;
+
+    [ObservableProperty]
+    private int _freeDays;
+
+    [ObservableProperty]
+    private int _busyDays;
 
     public MainViewModel(VkService vkService, IDataService? dataService = null)
     {
@@ -193,14 +204,49 @@ public partial class MainViewModel : ObservableObject
         var bookings = await _dataService.GetRoomBookingsAsync();
         CalendarDays.Clear();
 
-        // Генерируем дни на текущий месяц
-        var startDate = new DateTime(SelectedCalendarDate.Year, SelectedCalendarDate.Month, 1);
-        var endDate = startDate.AddMonths(1).AddDays(-1);
+        // Генерируем дни на текущий месяц (начиная с понедельника)
+        var year = SelectedCalendarDate.Year;
+        var month = SelectedCalendarDate.Month;
+        var firstDayOfMonth = new DateTime(year, month, 1);
+        
+        // Находим первый понедельник (или первый день месяца, если он понедельник)
+        var startDay = firstDayOfMonth;
+        while (startDay.DayOfWeek != DayOfWeek.Monday)
+        {
+            startDay = startDay.AddDays(-1);
+        }
+        
+        // Последний день отображения (6 недель = 42 дня максимум)
+        var endDay = startDay.AddDays(41);
 
-        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+        int totalBookingsCount = 0;
+        int freeDaysCount = 0;
+        int busyDaysCount = 0;
+
+        for (var date = startDay; date <= endDay; date = date.AddDays(1))
         {
             var dayBookings = bookings.Where(b => b.Date.Date == date.Date && b.Status != "rejected").ToList();
+            totalBookingsCount += dayBookings.Count;
+            
             var bookedHours = dayBookings.Sum(b => (int)(b.EndTime - b.StartTime).TotalHours);
+            
+            // Определяем статус дня
+            DayStatus dayStatus;
+            if (!dayBookings.Any())
+            {
+                dayStatus = DayStatus.Free;
+                if (date.Month == month) freeDaysCount++;
+            }
+            else if (bookedHours >= 8)
+            {
+                dayStatus = DayStatus.FullyBusy;
+                if (date.Month == month) busyDaysCount++;
+            }
+            else
+            {
+                dayStatus = DayStatus.PartiallyBusy;
+                if (date.Month == month) busyDaysCount++;
+            }
             
             var bookingInfo = string.Join("\n", dayBookings.Select(b => 
                 $"{b.StartTime:hh\\:mm}-{b.EndTime:hh\\:mm}: {b.Purpose} ({b.UserName})"));
@@ -208,11 +254,21 @@ public partial class MainViewModel : ObservableObject
             CalendarDays.Add(new CalendarDay
             {
                 Date = date,
+                DayNumber = date.Day.ToString(),
+                DayName = date.ToString("ddd", new CultureInfo("ru-RU")),
+                IsToday = date.Date == DateTime.Today,
+                IsCurrentMonth = date.Month == month,
                 HasBookings = dayBookings.Any(),
                 BookedHours = bookedHours,
-                BookingInfo = bookingInfo
+                BookingInfo = bookingInfo,
+                DayStatus = dayStatus
             });
         }
+
+        // Обновляем статистику
+        TotalBookings = totalBookingsCount;
+        FreeDays = freeDaysCount;
+        BusyDays = busyDaysCount;
     }
 
     [RelayCommand]
@@ -251,12 +307,14 @@ public partial class MainViewModel : ObservableObject
     public class CalendarDay
     {
         public DateTime Date { get; set; }
-        public string DayNumber => Date.Day.ToString();
-        public string DayName => Date.ToString("ddd", System.Globalization.CultureInfo.InvariantCulture);
-        public bool IsToday => Date.Date == DateTime.Today;
+        public string DayNumber { get; set; } = string.Empty;
+        public string DayName { get; set; } = string.Empty;
+        public bool IsToday { get; set; }
+        public bool IsCurrentMonth { get; set; } = true;
         public bool HasBookings { get; set; }
         public int BookedHours { get; set; }
         public string BookingInfo { get; set; } = string.Empty;
+        public DayStatus DayStatus { get; set; } = DayStatus.Free;
     }
 
     [RelayCommand]
@@ -302,6 +360,7 @@ public partial class MainViewModel : ObservableObject
         RoomBookings.Clear();
         foreach (var b in bookings) RoomBookings.Add(b);
         StatusMessage = $"Загружено {RoomBookings.Count} бронирований";
+        _ = LoadCalendarAsync(); // Обновляем календарь при загрузке бронирований
     }
 
     [RelayCommand]
@@ -319,6 +378,22 @@ public partial class MainViewModel : ObservableObject
         {
             StatusMessage = "Время окончания должно быть позже времени начала";
             return;
+        }
+
+        // Проверка на пересечение с существующими бронированиями
+        if (_dataService != null)
+        {
+            var existingBookings = await _dataService.GetRoomBookingsAsync();
+            var hasOverlap = existingBookings.Any(b => 
+                b.Date.Date == BookingDate.Date && 
+                b.Status != "rejected" &&
+                !(BookingEndTime <= b.StartTime || BookingStartTime >= b.EndTime));
+            
+            if (hasOverlap)
+            {
+                StatusMessage = "Ошибка: выбранное время пересекается с существующим бронированием";
+                return;
+            }
         }
 
         string userName;

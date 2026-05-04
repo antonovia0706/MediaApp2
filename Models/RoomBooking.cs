@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaApp2.Models;
 
@@ -16,4 +18,22 @@ public class RoomBooking
     public string Purpose { get; set; } = string.Empty;
     public string Status { get; set; } = "pending"; // pending, approved, rejected, completed
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    /// <summary>
+    /// Статус дня: Free, PartiallyBusy, FullyBusy
+    /// </summary>
+    public DayStatus GetDayStatus()
+    {
+        var totalHours = (EndTime - StartTime).TotalHours;
+        if (totalHours >= 8) return DayStatus.FullyBusy;
+        if (totalHours >= 4) return DayStatus.PartiallyBusy;
+        return DayStatus.Free;
+    }
+}
+
+public enum DayStatus
+{
+    Free,           // Свободно
+    PartiallyBusy,  // Частично занято
+    FullyBusy       // Занято полностью
 }
