@@ -13,5 +13,6 @@
 		<converters:BoolToIconConverter x:Key="BoolToIconConverter"/>
 		<converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
 		<converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+		<converters:BoolToBorderConverter x:Key="BoolToBorderConverter"/>
 	</Application.Resources>
 </Application>
