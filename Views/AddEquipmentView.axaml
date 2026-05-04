@@ -55,7 +55,7 @@
 												   Background="{Binding Color}" Foreground="White"
 												   CornerRadius="15" Padding="8,4" Margin="2"
 												   BorderThickness="0" Cursor="Hand" FontSize="11"
-												   Command="{Binding $parent[Window].(vm:AddEquipmentViewModel).RemoveTagFromSelectedCommand}"
+												   Command="{Binding $parent[Window].DataContext.RemoveTagFromSelectedCommand}"
 												   CommandParameter="{Binding .}"/>
 										</DataTemplate>
 									</ItemsControl.ItemTemplate>
@@ -75,7 +75,7 @@
 												   Background="{Binding Color}" Foreground="White" Opacity="0.6"
 												   CornerRadius="15" Padding="8,4" Margin="2"
 												   BorderThickness="0" Cursor="Hand" FontSize="11"
-												   Command="{Binding $parent[Window].(vm:AddEquipmentViewModel).AddTagFromAvailableCommand}"
+												   Command="{Binding $parent[Window].DataContext.AddTagFromAvailableCommand}"
 												   CommandParameter="{Binding .}"/>
 										</DataTemplate>
 									</ItemsControl.ItemTemplate>
