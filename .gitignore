@@ -1,29 +1,29 @@
-```gitignore
-# Build artifacts
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
+```axaml
+# Avalonia UI compiled files
+*.g.cs
+*.g.i.cs
+
+# Build outputs
+bin/
+obj/
+out/
 
 # Dependencies
 packages/
-lib/
-bin/
-obj/
+node_modules/
 
-# Logs and temp files
+# Logs
 *.log
+
+# User-specific files
+.vs/
+*.userprefs
+*.suo
+*.user
+
+# Temporary files
 *.tmp
-*.swp
-
-# Editors
-.vscode/
-.idea/
-
-# OS files
+*~
 .DS_Store
 Thumbs.db
 ```

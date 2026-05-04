@@ -125,17 +125,6 @@
 </StackPanel>
 </Border>
 
-<!-- Кнопки управления -->
-<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal"
-   Spacing="10" Margin="0,15,0,0" HorizontalAlignment="Right">
-<Button Content="Взять выбранное" Command="{Binding CheckoutCommand}"
-Classes="PrimaryButton" Width="140"/>
-<Button Content="Вернуть" Command="{Binding ReturnCommand}"
-Classes="PrimaryButton" Width="100"/>
-<Button Content="➕ Добавить" Command="{Binding OpenAddEquipmentWindowCommand}"
-Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
-</StackPanel>
-
 <!-- Таблица с тегами -->
 <DataGrid ItemsSource="{Binding EquipmentList}"
  AutoGenerateColumns="False"
