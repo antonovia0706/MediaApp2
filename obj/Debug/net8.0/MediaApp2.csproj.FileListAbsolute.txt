@@ -71,3 +71,6 @@ C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\obj\Debug\net8.0\MediaApp2.
 C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\obj\Debug\net8.0\MediaApp2.genruntimeconfig.cache
 C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\obj\Debug\net8.0\ref\MediaApp2.dll
 C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\bin\Debug\net8.0\System.Net.Http.Json.dll
+C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\obj\Debug\net8.0\MediaApp2.dll
+C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\obj\Debug\net8.0\refint\MediaApp2.dll
+C:\Users\in2ant\Documents\GitHub\MediaApp2\MediaApp2\obj\Debug\net8.0\MediaApp2.pdb

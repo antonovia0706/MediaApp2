@@ -54,7 +54,7 @@
 <DataTemplate DataType="models:VkPost">
 <Border Classes="NewsCard">
 <StackPanel Spacing="8">
-<StackPanel Orientation="Horizontal">
+<StackPanel Orientation="Horizontal">;
 <TextBlock Text="👤" FontSize="16"/>
 <TextBlock Text="{Binding AuthorName}" FontWeight="Bold" Foreground="#667eea" Margin="5,0,0,0"/>
 <TextBlock Text="•" Margin="10,0"/>
@@ -74,7 +74,7 @@
 </Border>
 </DataTemplate>
 </ItemsControl.ItemTemplate>
-</ItemsControl>
+</ItemsControl>;
 </StackPanel>
 </ScrollViewer>
 </TabItem>
