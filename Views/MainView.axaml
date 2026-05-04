@@ -190,17 +190,97 @@ Classes="PrimaryButton" Width="130" IsVisible="{Binding IsAdmin}"/>
 <!-- Вкладка бронирования помещения -->
 <TabItem Header=" 🏢 Бронирование">
 <DockPanel>
-<!-- Форма бронирования -->
+<!-- Календарь и форма бронирования -->
 <Border DockPanel.Dock="Top" Background="#f8f9fa" CornerRadius="12" Padding="20" Margin="0,0,0,20">
 <StackPanel Spacing="15">
-<TextBlock Text="📅 Забронировать помещение" FontSize="18" FontWeight="Bold" Foreground="#667eea"/>
+<TextBlock Text="📅 Календарь бронирования" FontSize="18" FontWeight="Bold" Foreground="#667eea"/>
+
+<!-- Навигация по месяцам -->
+<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+<Button Content="◀ Пред." Command="{Binding PreviousMonthCommand}" Width="100" Classes="PrimaryButton"/>
+<TextBlock Text="{Binding SelectedCalendarDate, StringFormat='{}{0:MMMM yyyy}'}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+<Button Content="След. ▶" Command="{Binding NextMonthCommand}" Width="100" Classes="PrimaryButton"/>
+</StackPanel>
+
+<!-- Сетка календаря -->
+<Border Background="White" CornerRadius="8" Padding="10" Margin="0,10">
+<Grid ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,*">
+<!-- Дни недели -->
+<TextBlock Grid.Row="0" Grid.Column="0" Text="Пн" FontWeight="Bold" HorizontalAlignment="Center" Padding="5"/>
+<TextBlock Grid.Row="0" Grid.Column="1" Text="Вт" FontWeight="Bold" HorizontalAlignment="Center" Padding="5"/>
+<TextBlock Grid.Row="0" Grid.Column="2" Text="Ср" FontWeight="Bold" HorizontalAlignment="Center" Padding="5"/>
+<TextBlock Grid.Row="0" Grid.Column="3" Text="Чт" FontWeight="Bold" HorizontalAlignment="Center" Padding="5"/>
+<TextBlock Grid.Row="0" Grid.Column="4" Text="Пт" FontWeight="Bold" HorizontalAlignment="Center" Padding="5"/>
+<TextBlock Grid.Row="0" Grid.Column="5" Text="Сб" FontWeight="Bold" Foreground="#e74c3c" HorizontalAlignment="Center" Padding="5"/>
+<TextBlock Grid.Row="0" Grid.Column="6" Text="Вс" FontWeight="Bold" Foreground="#e74c3c" HorizontalAlignment="Center" Padding="5"/>
+
+<!-- Дни месяца -->
+<ItemsControl Grid.Row="1" Grid.ColumnSpan="7" ItemsSource="{Binding CalendarDays}">
+<ItemsControl.ItemsPanel>
+<ItemsPanelTemplate>
+<UniformGrid Columns="7"/>
+</ItemsPanelTemplate>
+</ItemsControl.ItemsPanel>
+<ItemsControl.ItemTemplate>
+<DataTemplate>
+<Border Margin="2" CornerRadius="4" Padding="5" 
+        Background="{Binding HasBookings, Converter={StaticResource BoolToColorConverter}}"
+        BorderBrush="{Binding IsToday, Converter={StaticResource BoolToBorderConverter}}"
+        BorderThickness="2" Cursor="Hand">
+<Border.ToolTip>
+<ToolTip Content="{Binding BookingInfo}"/>
+</Border.ToolTip>
+<StackPanel HorizontalAlignment="Center">
+<TextBlock Text="{Binding DayNumber}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+<TextBlock Text="{Binding DayName}" FontSize="10" Foreground="#666" HorizontalAlignment="Center"/>
+<Border IsVisible="{Binding HasBookings}" Background="#e74c3c" CornerRadius="3" Padding="3,1" Margin="0,2">
+<TextBlock Text="{Binding BookedHours} ч." FontSize="9" Foreground="White" HorizontalAlignment="Center"/>
+</Border>
+</StackPanel>
+</Border>
+</DataTemplate>
+</ItemsControl.ItemTemplate>
+</ItemsControl>
+</Grid>
+</Border>
+
+<!-- Информация о выбранном дне -->
+<Border IsVisible="{Binding SelectedDayBooking, Converter={StaticResource NotNullConverter}}" 
+        Background="#e8f4fd" CornerRadius="8" Padding="15" Margin="0,10">
+<StackPanel>
+<TextBlock Text="📋 Бронирования на выбранный день:" FontWeight="Bold" Margin="0,0,0,10"/>
+<ItemsControl ItemsSource="{Binding RoomBookings}">
+<ItemsControl.ItemTemplate>
+<DataTemplate>
+<Border Background="White" CornerRadius="4" Padding="8" Margin="0,2">
+<StackPanel>
+<TextBlock Text="{Binding UserName}" FontWeight="SemiBold"/>
+<TextBlock Text="{Binding Purpose}" FontSize="12" Foreground="#666"/>
+<TextBlock Text="{Binding StartTime, StringFormat='{}{0:hh\\:mm}'} - {Binding EndTime, StringFormat='{}{0:hh\\:mm}'}" FontSize="11" Foreground="#999"/>
+<Border CornerRadius="4" Padding="4,2" Margin="0,2" 
+        Background="{Binding Status, Converter={StaticResource StatusToColorConverter}}" 
+        HorizontalAlignment="Left">
+<TextBlock Text="{Binding Status}" FontSize="10" Foreground="White"/>
+</Border>
+</StackPanel>
+</Border>
+</DataTemplate>
+</ItemsControl.ItemTemplate>
+</ItemsControl>
+</StackPanel>
+</Border>
+
+<Separator Margin="0,10"/>
+
+<!-- Форма бронирования -->
+<TextBlock Text="📝 Забронировать помещение" FontSize="16" FontWeight="Bold" Foreground="#667eea"/>
 
 <!-- Переключатель: пользователь / гость -->
 <StackPanel Orientation="Horizontal" Spacing="15">
-<CheckBox Content="Я гость (без аккаунта)" IsChecked="{Binding IsGuestBooking}"/>
+<CheckBox Content="Я гость (без аккаунта)\" IsChecked=\"{Binding IsGuestBooking}\"/>
 </StackPanel>
 
-<Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" VerticalAlignment="Center">
+<Grid ColumnDefinitions=\"*,*,*\" RowDefinitions=\"Auto,Auto,Auto,Auto,Auto\" VerticalAlignment=\"Center\">
 <!-- Дата и время -->
 <TextBlock Grid.Row="0" Grid.Column="0" Text="Дата:" VerticalAlignment="Center" Margin="0,0,10,0"/>
 <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding BookingDate}" Margin="0,0,10,0"/>
@@ -238,7 +318,7 @@ Classes="PrimaryButton" Width="200" HorizontalAlignment="Right"/>
 </StackPanel>
 </Border>
 
-<!-- Список бронирований -->
+<!-- Список всех бронирований -->
 <DataGrid ItemsSource="{Binding RoomBookings}"
   AutoGenerateColumns="False"
   IsReadOnly="True"

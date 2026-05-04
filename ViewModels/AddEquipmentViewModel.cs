@@ -123,6 +123,24 @@ public partial class AddEquipmentViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void AddTagFromAvailable(TagModel tag)
+    {
+        if (tag == null || SelectedTags.Any(t => t.Name == tag.Name)) return;
+        
+        SelectedTags.Add(tag);
+        AvailableTags.Remove(tag);
+    }
+
+    [RelayCommand]
+    private void RemoveTagFromSelected(TagModel tag)
+    {
+        if (tag == null) return;
+        
+        SelectedTags.Remove(tag);
+        AvailableTags.Add(tag);
+    }
+
+    [RelayCommand]
     private void OpenTagManager()
     {
         // TODO: Открыть окно управления тегами

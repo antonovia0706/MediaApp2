@@ -80,6 +80,7 @@ public partial class MainViewModel : ObservableObject
         IsAdmin = false;
         _ = LoadNewsAsync();
         _ = LoadEquipmentAsync();
+        _ = LoadCalendarAsync();
     }
 
     [RelayCommand]
@@ -184,10 +185,79 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    private async Task LoadCalendarAsync()
+    {
+        if (_dataService == null) return;
+
+        var bookings = await _dataService.GetRoomBookingsAsync();
+        CalendarDays.Clear();
+
+        // Генерируем дни на текущий месяц
+        var startDate = new DateTime(SelectedCalendarDate.Year, SelectedCalendarDate.Month, 1);
+        var endDate = startDate.AddMonths(1).AddDays(-1);
+
+        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+        {
+            var dayBookings = bookings.Where(b => b.Date.Date == date.Date && b.Status != "rejected").ToList();
+            var bookedHours = dayBookings.Sum(b => (int)(b.EndTime - b.StartTime).TotalHours);
+            
+            var bookingInfo = string.Join("\n", dayBookings.Select(b => 
+                $"{b.StartTime:hh\\:mm}-{b.EndTime:hh\\:mm}: {b.Purpose} ({b.UserName})"));
+
+            CalendarDays.Add(new CalendarDay
+            {
+                Date = date,
+                HasBookings = dayBookings.Any(),
+                BookedHours = bookedHours,
+                BookingInfo = bookingInfo
+            });
+        }
+    }
+
+    [RelayCommand]
+    private void SelectCalendarDay(CalendarDay day)
+    {
+        if (day == null) return;
+        
+        SelectedCalendarDate = day.Date;
+        SelectedDayBooking = RoomBookings.FirstOrDefault(b => b.Date.Date == day.Date.Date);
+    }
+
+    [RelayCommand]
+    private void PreviousMonth()
+    {
+        SelectedCalendarDate = SelectedCalendarDate.AddMonths(-1);
+        _ = LoadCalendarAsync();
+    }
+
+    [RelayCommand]
+    private void NextMonth()
+    {
+        SelectedCalendarDate = SelectedCalendarDate.AddMonths(1);
+        _ = LoadCalendarAsync();
+    }
+
     public event Action? OnLoginRequested;
     // Свойства корзины
     [ObservableProperty] private ObservableCollection<Equipment> _cart = new();
     [ObservableProperty] private int _cartCount;
+
+    // Свойства для календаря бронирования
+    [ObservableProperty] private ObservableCollection<CalendarDay> _calendarDays = new();
+    [ObservableProperty] private DateTime _selectedCalendarDate = DateTime.Today;
+    [ObservableProperty] private RoomBooking? _selectedDayBooking;
+
+    public class CalendarDay
+    {
+        public DateTime Date { get; set; }
+        public string DayNumber => Date.Day.ToString();
+        public string DayName => Date.ToString("ddd", System.Globalization.CultureInfo.InvariantCulture);
+        public bool IsToday => Date.Date == DateTime.Today;
+        public bool HasBookings { get; set; }
+        public int BookedHours { get; set; }
+        public string BookingInfo { get; set; } = string.Empty;
+    }
 
     [RelayCommand]
     private void ToggleCart(Equipment equipment)
